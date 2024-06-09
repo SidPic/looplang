@@ -12,19 +12,20 @@ const std::set<std::string> infix {
     "+", "-", "*", "/",
     "#", "%", "^", ".",
     "<", ">", "<=", ">=",
+    "-r", "/r", "<r", ">r", "<=r", ">=r", "%r", "^r", "+r", "*r"
 };
 
 const std::map<std::string, unsigned char> priority {
-    { "+", 3 },
-    { "-", 3 },
-    { "*", 2 },
-    { "/", 2 },
-    { "%", 1 },
-    { "^", 1 },
-    { "<", 4 },
-    { "<=", 4 },
-    { ">", 4 },
-    { ">=", 4 }
+    { "+", 3 }, { "+r", 3 },
+    { "-", 3 }, { "-r", 3 },
+    { "*", 2 }, { "*r", 2 },
+    { "/", 2 }, { "/r", 2 },
+    { "%", 1 }, { "%r", 1 },
+    { "^", 1 }, { "^r", 1 },
+    { "<", 4 }, { "<r", 4 },
+    { "<=", 4 }, { "<=r", 4 },
+    { ">", 4 }, { ">r", 4 },
+    { ">=", 4 }, { ">=r", 4 }
 };
 
 bool isinfix(const std::string& token) {
@@ -120,7 +121,10 @@ int main() {
                         break;
                     }
                     else {
-                        couples[couple].push_back(tok[token]);
+                        couples[couple].push_back(
+                        (token+1 < tok.size() && tok[token+1] == "(" && isinfix(tok[token])) ?
+                            tok[token] + "r" : tok[token]
+                        );
                     }
                 } // сделать аналогично для более приоритетных операторов
 
@@ -147,6 +151,8 @@ int main() {
                 }
 
                 if (!ptoks.empty()) tok = ptoks;
+
+                #undef tok
             };
             parse_brackets();
             couples.erase(couples.begin()+begin);
@@ -157,11 +163,47 @@ int main() {
         couples.back().push_back(END_TOK);
     }
 
-    for (auto& c : couples) {
-        for (auto& s : c) {
-            std::cout << s << " ";
+    std::vector<std::string> script;
+    auto cur = script.begin();
+
+    for (int i = 0; i < couples.size(); ++i) {
+        size_t begin = i;
+        while (couples[i][0] != END_TOK) ++i;
+        for (std::vector<std::vector<std::string>>::reverse_iterator c = couples.rend()-i; c != couples.rend()-begin; ++c) {
+            #define c (*c)
+
+            if (c.empty()) continue;
+            if (c[0] == END_TOK) {
+
+                //~ std::cout << END_TOK << std::endl;///DEBUG
+
+                script.push_back(END_TOK);
+                continue;
+            }
+
+            bool has_infix = false;
+            for (auto& tok : c) if (isinfix(tok)) {
+                has_infix = true;
+                break;
+            }
+
+            if (has_infix) for (auto tok = c.begin(); tok != c.end(); ++tok) {
+                if (tok->empty()) continue;
+                //~ std::cout << *tok << " "; ///DEBUG
+                script.push_back(*tok);
+            }
+            else for (auto tok = c.rbegin(); tok != c.rend(); ++tok) {
+                if (tok->empty()) continue;
+                //~ std::cout << *tok << " "; ///DEBUG
+                script.push_back(*tok);
+            }
+            //~ std::cout << std::endl; ///DEBUG
+            #undef c
         }
-        std::cout << std::endl;
+    }
+
+    for (auto& cmd : script) {
+        std::cout << cmd << std::endl;
     }
 
     return 0;

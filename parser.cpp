@@ -63,16 +63,23 @@ again:
         token.push_back('\"');
         while ((ch = fgetc(file)) != '\"' && ch != EOF) token.push_back(ch);
         token.push_back('\"');
+        ch = fgetc(file);
     }
-    else if (ispunct(ch)) {
+    else if (isdigit(ch)) {
+        while (isdigit(ch) || ch == '.') {
+            token.push_back(ch);
+            ch = fgetc(file);
+        }
+    }
+    else if (ch != '$' && ispunct(ch)) {
         while (ispunct(ch)) {
             token.push_back(ch);
             ch = fgetc(file);
             if (ch == '(' || ch == ')' || ch == ',' || ch == ';') break;
         }
     }
-    else if (isalnum(ch)) {
-        while (isalnum(ch)) {
+    else if (ch == '$' || isalnum(ch)) {
+        while (ch == '$' || isalnum(ch)) {
             token.push_back(ch);
             ch = fgetc(file);
         }

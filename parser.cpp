@@ -15,7 +15,8 @@ const std::string END_TOK {";"};
 const std::set<std::string> INFIXES {
     "+", "-", "*", "/",     "+r", "-r", "*r", "/r",
     "#", "%", "^", ".",     "#r", "%r", "^r", ".r",
-    "<", ">", "<=", ">=",   "<r", ">r", "<=r", ">=r"
+    "<", ">", "<=", ">=",   "<r", ">r", "<=r", ">=r",
+    "=", "and", "or",       "=r", "andr", "orr"
 };
 
 const std::unordered_map<std::string, char> PRIORITIES {
@@ -30,7 +31,10 @@ const std::unordered_map<std::string, char> PRIORITIES {
     { "<", 4 }, { "<r", 4 },
     { ">", 4 }, { ">r", 4 },
     { "<=", 4 }, { "<=r", 4 },
-    { ">=", 4 }, { ">=r", 4 }
+    { ">=", 4 }, { ">=r", 4 },
+    { "and", 5 }, { "andr", 5 },
+    { "or", 6 }, { "orr", 6 },
+    { "=", 7 }, { "=r", 7 }
 };
 
 /*---------------- GETTERS -----------------*/
@@ -184,7 +188,7 @@ void ll::parse(std::vector<std::string>& script, const char* filename) {
                     is_moved.clear();
                     is_moved.resize(tok.size(), false);
 
-                    for (int p = 0; p <= 7; ++p) {
+                    for (int p = 0; p < 8; ++p) {
                         for (int n = 0; n < tok.size(); ++n) {
                             if (isinfix(tok[n]) && priority(tok[n]) == p)
                             {

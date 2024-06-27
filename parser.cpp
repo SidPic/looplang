@@ -50,6 +50,8 @@ inline char ll::priority(const std::string& token) {
 /*-------------- PARSER ----------------*/
 
 int read_token(std::string& token, FILE* file) {
+    bool tok_empty = token.empty();
+    auto tok = token;
     token.clear();
     int ch;
 again:
@@ -61,6 +63,7 @@ again:
 
     if (ch == ';') {
         while ((ch = fgetc(file)) != '\n' && ch != EOF);
+        if (!tok_empty && tok != END_TOK) return '\n';
         goto again;
     }
     else if (ch == '\"') {
@@ -101,7 +104,7 @@ void ll::parse(std::vector<std::string>& script, const char* filename) {
 
     std::vector<std::vector<std::string>> couples;
 
-    { // begin of using the raw tokens
+    { // begin of using the raw_tokens
     std::vector<std::string> raw_tokens;
 
     FILE* file = fopen(filename, "r");
@@ -109,7 +112,7 @@ void ll::parse(std::vector<std::string>& script, const char* filename) {
     {std::string token;
     for (int c; c = read_token(token, file);) {
         if (!token.empty()) raw_tokens.push_back(token);
-        if (c == '\n') raw_tokens.push_back(END_TOK);
+        if (c == '\n') raw_tokens.push_back(END_TOK), token = END_TOK;
     }}
 
 
@@ -218,8 +221,6 @@ void ll::parse(std::vector<std::string>& script, const char* filename) {
     }
 
     } // end of using the raw_tokens
-
-    auto cur = script.begin();
 
     for (int i = 0; i < couples.size(); ++i) {
         size_t begin = i;

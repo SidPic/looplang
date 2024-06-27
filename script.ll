@@ -1,4 +1,4 @@
-;var x; is global
+;var global
 
 func sqr x
     return x*x
@@ -29,20 +29,35 @@ func hello
         say "E_L_S_E"
     endif
 
-    say "KOK"
+    say "IF_ELIF_ELSE OK"
 
     if 1 = 5
         say "ELIF 1 = 5"
     else
         say "ELSE"
         if 1 = 1
-            say "1 = 1"
+            say "ELSE IF 1 = 1"
         endif
     endif
 
-    say "OK"
+    say "IF_ELSE OK"
+
+    var n 0
+    loop n < 10 ;  n := 0..10 (возможный вариант, loop принимает bool, выражение под loop возвращает bool)
+                ;  т.е. в данном случае '..' возвращает диапазон, ':=' обрабатывает его и возвращает bool
+        say "# " n
+
+        var j 0
+        loop j < 2
+            say j
+            inc j
+        endl
+
+        inc n
+    endl
+
+    say "LOOP OK"
 end
 
+;корректно парсится
 ;var x, 10, object.func.a, asd, arr#(12 - 1), 11, 2 - (53 - (32 - 10 / o.a * (sum 1 2)) - 21) * 100
-;set y 10
-;say "hello world"

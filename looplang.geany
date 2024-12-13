@@ -5,9 +5,9 @@ auto_continue_multiline=true
 
 [file_prefs]
 final_new_line=true
-ensure_convert_new_lines=false
-strip_trailing_spaces=false
-replace_tabs=false
+ensure_convert_new_lines=true
+strip_trailing_spaces=true
+replace_tabs=true
 
 [indentation]
 indent_width=4
@@ -28,12 +28,13 @@ long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=2
-FILE_NAME_0=5186;C++;0;EUTF-8;0;1;0;%2Fhome%2Fsid%2Flooplang%2Fmain.cpp;0;4
-FILE_NAME_1=1150;C++;0;EUTF-8;0;1;0;%2Fhome%2Fsid%2Flooplang%2Ftypes.hpp;0;4
-FILE_NAME_2=1968;C++;0;EUTF-8;0;1;0;%2Fhome%2Fsid%2Flooplang%2Fstack.hpp;0;4
-FILE_NAME_3=7167;None;0;EUTF-8;0;1;0;%2Fhome%2Fsid%2Flooplang%2Fmain.old;0;4
-FILE_NAME_4=26;None;0;EUTF-8;0;1;0;%2Fhome%2Fsid%2Flooplang%2Ftest.ll;0;4
+current_page=0
+FILE_NAME_0=4426;C++;0;EUTF-8;0;1;0;%2Fhome%2Fsid%2Flooplang%2Fmain.cpp;0;4
+FILE_NAME_1=107;C++;0;EUTF-8;0;1;0;%2Fhome%2Fsid%2Flooplang%2Ftypes.hpp;0;4
+FILE_NAME_2=1400;C++;0;EUTF-8;0;1;0;%2Fhome%2Fsid%2Flooplang%2Fstack.hpp;0;4
+FILE_NAME_3=440;C++;0;EUTF-8;0;1;0;%2Fhome%2Fsid%2Flooplang%2Fbasic_functions.hpp;0;4
+FILE_NAME_4=7167;None;0;EUTF-8;0;1;0;%2Fhome%2Fsid%2Flooplang%2Fmain.old;0;4
+FILE_NAME_5=12;None;0;EUTF-8;0;1;0;%2Fhome%2Fsid%2Flooplang%2Ftest.ll;0;4
 
 [VTE]
 last_dir=/home/sid/looplang

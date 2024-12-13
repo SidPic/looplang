@@ -1,1 +1,2 @@
-var x "asdas asdsad dsds"
+var x "42.6"
+;print x

@@ -1,3 +1,11 @@
+/*
+ * Дисклеймер: ниже жуткий С-стайл!
+ * Прошу автора понять и простить - писал как чувствовал
+ *
+ * А рефакторить... ну знаете...
+ * теперь надо ещё понять как это работает ;)
+ *
+ * */
 #include "parser.hpp"
 
 #include <set>
@@ -5,7 +13,7 @@
 #include <cctype>
 #include <functional>
 
-using namespace ll;
+using namespace lpl;
 
 /*------------------ TABLES ------------------*/
 
@@ -38,11 +46,11 @@ const std::unordered_map<std::string, char> PRIORITIES {
 
 /*---------------- GETTERS -----------------*/
 
-inline bool ll::isinfix(const std::string& token) {
+inline bool lpl::isinfix(const std::string& token) {
     return INFIXES.contains(token);
 }
 
-inline char ll::priority(const std::string& token) {
+inline char lpl::priority(const std::string& token) {
     return PRIORITIES.at(token);
 }
 
@@ -98,7 +106,7 @@ again:
     return ch;
 }
 
-void ll::parse(std::vector<std::string>& script, const char* filename) {
+void lpl::parse(std::vector<std::string>& script, const char* filename) {
     script.clear();
 
     std::vector<std::vector<std::string>> couples;
